@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "我的消费看板｜15日账期",
+  "short_name": "消费看板",
+  "description": "每期6000元，只填一个累计消费总额。离线可用、数据仅留本机。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f4f6f8",
+  "theme_color": "#122e38",
+  "icons": [
+    {"src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose":"any maskable"},
+    {"src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose":"any maskable"}
+  ]
+}

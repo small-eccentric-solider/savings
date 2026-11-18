@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#122e38">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="消费看板">
+  <meta name="description" content="离线的15号账期消费进度看板。每期预算6000元，只需更新累计消费总额。">
+  <meta name="color-scheme" content="light">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+  <link rel="icon" href="./icons/icon-192.png" type="image/png">
+  <link rel="stylesheet" href="./styles.css">
+  <title>我的消费看板</title>
+  <script src="./app.js" defer></script>
+</head>
+<body>
+  <main class="app-shell">
+    <header class="header">
+      <div>
+        <div class="eyebrow">PERSONAL BUDGET</div>
+        <h1>我的消费看板</h1>
+        <div class="subtitle">每月 15 日开始 · 5 日发薪</div>
+      </div>
+      <div class="period-nav" aria-label="选择记账周期">
+        <button type="button" id="prev" aria-label="上个账期">‹</button>
+        <button type="button" id="next" aria-label="下个账期">›</button>
+      </div>
+    </header>
+
+    <div class="period-line"><span id="periodLabel">正在加载…</span><span class="period-chip" id="dayBadge"></span></div>
+
+    <section class="hero" aria-label="预算结果">
+      <div class="hero-kicker">截至统计日期 · 累计预算差额</div>
+      <div class="hero-number" id="difference">—</div>
+      <div class="hero-caption" id="differenceDescription">输入消费总额即可计算</div>
+      <div class="progress-group">
+        <div class="progress-label"><span>时间进度</span><strong id="timePct">—</strong></div>
+        <div class="progress-track"><div class="progress-fill time" id="timeProgress"></div></div>
+        <div class="progress-label"><span>消费进度</span><strong id="spendingPct">—</strong></div>
+        <div class="progress-track"><div class="progress-fill spending" id="spendingProgress"></div></div>
+      </div>
+    </section>
+
+    <section class="summary" aria-label="预算统计">
+      <div class="stat"><span>账期总预算</span><strong id="totalBudget">¥6,000</strong></div>
+      <div class="stat"><span>截至今天应花</span><strong id="expectedSpent">—</strong></div>
+      <div class="stat"><span>本期预算剩余</span><strong id="remaining">—</strong></div>
+    </section>
+
+    <section class="card entry-card">
+      <div class="section-tag">唯一需要更新的数字</div>
+      <h2>本期累计消费</h2>
+      <p class="hint">填写从本期 15 日至统计日的累计消费，不是当天的金额。重复保存会<span class="underline">覆盖旧值</span>，不会叠加。</p>
+      <form id="totalForm">
+        <div class="money-input"><span>¥</span><input id="totalInput" name="total" type="number" step="0.01" min="0" max="99999999" inputmode="decimal" placeholder="例如 860.00" autocomplete="off" required aria-label="本账期累计消费总额"></div>
+        <button type="submit" class="primary" id="saveBtn">保存本期累计消费</button>
+      </form>
+      <div class="entry-foot"><span class="entry-date" id="lastUpdated">尚未保存</span><span class="save-message" id="saveMessage" role="status" aria-live="polite"></span></div>
+    </section>
+
+    <section class="next-budget">
+      <div><span>本账期还剩</span><strong id="daysRemaining">—</strong></div>
+      <div><span>此后每天平均可花</span><strong id="dailyAllowance">—</strong></div>
+    </section>
+
+    <section class="card history-card">
+      <div class="section-row"><div><h2>历史账期</h2><p class="hint">切换顶部箭头，查看或修正任意历史账期</p></div><span id="historyCount" class="history-badge">0 期</span></div>
+      <div id="historyList" class="history-list"><div class="empty">暂无记录</div></div>
+    </section>
+
+    <details class="card settings" id="settingsPanel">
+      <summary>预算和数据管理 <span class="chevron">⌄</span></summary>
+      <div class="settings-inner">
+        <label class="field-label" for="budgetInput">本期预算（元）</label>
+        <div class="setting-row"><input id="budgetInput" type="number" step="1" min="1" max="99999999" inputmode="numeric"><button type="button" id="budgetSave" class="secondary">保存预算</button></div>
+        <p class="hint">不填写则默认每期 ¥6,000。未来新账期也默认 ¥6,000。</p>
+        <div class="section-divider"></div>
+        <label class="field-label" for="incomeInput">本期实际入账（可选）</label>
+        <div class="setting-row"><input id="incomeInput" type="number" step="0.01" min="0" inputmode="decimal" placeholder="工资到账后填写"><button type="button" id="incomeSave" class="secondary">保存入账</button></div>
+        <p class="hint">预计工资不会自动计入收入；实际入账后再填写。发薪日按每月 5 日计算。</p>
+        <div class="section-divider"></div>
+        <div class="backup-grid"><button type="button" class="secondary" id="exportBtn">导出备份</button><label class="secondary file-label" for="importFile">恢复备份<input id="importFile" type="file" accept=".json,application/json" hidden></label></div>
+        <p class="hint">消费记录只存在当前设备。备份为 JSON 文件，建议每月导出并保存到“文件”或 iCloud 云盘。</p>
+      </div>
+    </details>
+
+    <div class="notice" id="coverageNotice">提醒：未更新的消费不会自动同步微信、支付宝。信用卡刷卡应计入消费，还款不再重复计算。</div>
+    <footer class="footer">离线单机 · 无广告 · 无服务器账户 · 数据不会主动上传<br>公司报销、USDT 买入本金不计入日常消费。</footer>
+  </main>
+</body>
+</html>
