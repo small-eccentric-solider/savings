@@ -1,0 +1,121 @@
+[
+  {
+    "exercise": "器械推胸",
+    "source_id": "Machine_Bench_Press",
+    "original_images": [
+      "Machine_Bench_Press/0.jpg",
+      "Machine_Bench_Press/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "上斜器械推胸",
+    "source_id": "Leverage_Incline_Chest_Press",
+    "original_images": [
+      "Leverage_Incline_Chest_Press/0.jpg",
+      "Leverage_Incline_Chest_Press/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "蝴蝶机夹胸",
+    "source_id": "Butterfly",
+    "original_images": [
+      "Butterfly/1.jpg",
+      "Butterfly/0.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "绳索三头下压",
+    "source_id": "Triceps_Pushdown_-_Rope_Attachment",
+    "original_images": [
+      "Triceps_Pushdown_-_Rope_Attachment/0.jpg",
+      "Triceps_Pushdown_-_Rope_Attachment/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "器械肩推",
+    "source_id": "Leverage_Shoulder_Press",
+    "original_images": [
+      "Leverage_Shoulder_Press/0.jpg",
+      "Leverage_Shoulder_Press/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "哑铃侧平举",
+    "source_id": "Side_Lateral_Raise",
+    "original_images": [
+      "Side_Lateral_Raise/0.jpg",
+      "Side_Lateral_Raise/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "反向蝴蝶机",
+    "source_id": "Reverse_Machine_Flyes",
+    "original_images": [
+      "Reverse_Machine_Flyes/0.jpg",
+      "Reverse_Machine_Flyes/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "平板支撑",
+    "source_id": "Plank",
+    "original_images": [
+      "Plank/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "高位下拉",
+    "source_id": "Wide-Grip_Lat_Pulldown",
+    "original_images": [
+      "Wide-Grip_Lat_Pulldown/0.jpg",
+      "Wide-Grip_Lat_Pulldown/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "胸托坐姿划船",
+    "source_id": "Leverage_Iso_Row",
+    "original_images": [
+      "Leverage_Iso_Row/0.jpg",
+      "Leverage_Iso_Row/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "绳索直臂下压",
+    "source_id": "Straight-Arm_Pulldown",
+    "original_images": [
+      "Straight-Arm_Pulldown/0.jpg",
+      "Straight-Arm_Pulldown/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  },
+  {
+    "exercise": "哑铃弯举",
+    "source_id": "Dumbbell_Bicep_Curl",
+    "original_images": [
+      "Dumbbell_Bicep_Curl/0.jpg",
+      "Dumbbell_Bicep_Curl/1.jpg"
+    ],
+    "source": "https://github.com/yuhonas/free-exercise-db",
+    "license": "Unlicense (as declared by the source project)"
+  }
+]
