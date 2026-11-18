@@ -268,10 +268,22 @@
     document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshDateOnForeground()});
     window.addEventListener('pageshow',refreshDateOnForeground);
     if('serviceWorker' in navigator && location.protocol==='https:'){
-      navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).catch(()=>{});
+      const hadController=!!navigator.serviceWorker.controller;
+      let formEdited=false,reloaded=false;
+      document.addEventListener('input',()=>{formEdited=true;},{once:true});
+      navigator.serviceWorker.addEventListener('controllerchange',()=>{
+        if(!hadController||reloaded)return;
+        if(formEdited){showMessage('新版文案已就绪，保存后重新打开即可更新');return;}
+        reloaded=true;location.reload();
+      });
+      navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).then(reg=>{
+        reg.update().catch(()=>{});
+        document.addEventListener('visibilitychange',()=>{if(!document.hidden)reg.update().catch(()=>{});});
+      }).catch(()=>{});
     }
   }
   start().catch(e=>{showMessage('初始化异常：'+e.message);render()});
 })();
+
 
 

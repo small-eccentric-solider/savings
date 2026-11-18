@@ -1,4 +1,4 @@
-const CACHE = 'budget-pwa-static-v3-copy';
+const CACHE = 'budget-pwa-static-v4-copy-update';
 const SHELL = ['./','./index.html','./styles.css','./app.js','./manifest.webmanifest','./icons/icon-192.png','./icons/icon-512.png','./icons/apple-touch-icon.png'];
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(SHELL)).then(() => self.skipWaiting()));
@@ -15,4 +15,5 @@ self.addEventListener('fetch', event => {
     event.respondWith(caches.open(CACHE).then(cache=>cache.match(event.request,{ignoreSearch:true}).then(hit=>hit||fetch(event.request))));
   }
 });
+
 
