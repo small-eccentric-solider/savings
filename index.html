@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="消费看板">
-  <meta name="description" content="消费预算与资产总览，统计银行卡、欧意和富途账户净资产，数据仅保存在本机。">
+  <meta name="description" content="15 日账期消费预算、银行卡、欧意与富途资产总览。支持离线使用，数据仅保存于本机。">
   <meta name="color-scheme" content="light">
   <link rel="manifest" href="./manifest.webmanifest">
   <link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
@@ -24,7 +24,7 @@
         <h1>我的消费与资产</h1>
         <div class="subtitle">每月 15 日开始 · 5 日发薪</div>
       </div>
-      <div class="period-nav" aria-label="选择记账周期">
+      <div class="period-nav" aria-label="选择账期">
         <button type="button" id="prev" aria-label="上个账期">‹</button>
         <button type="button" id="next" aria-label="下个账期">›</button>
       </div>
@@ -35,9 +35,9 @@
 
     <div id="spendingPanel">
     <section class="hero" aria-label="预算结果">
-      <div class="hero-kicker">截至统计日期 · 累计预算差额</div>
+      <div class="hero-kicker">截至统计日 · 累计预算差额</div>
       <div class="hero-number" id="difference">—</div>
-      <div class="hero-caption" id="differenceDescription">输入消费总额即可计算</div>
+      <div class="hero-caption" id="differenceDescription">输入累计消费即可计算</div>
       <div class="progress-group">
         <div class="progress-label"><span>时间进度</span><strong id="timePct">—</strong></div>
         <div class="progress-track"><div class="progress-fill time" id="timeProgress"></div></div>
@@ -48,14 +48,14 @@
 
     <section class="summary" aria-label="预算统计">
       <div class="stat"><span>账期总预算</span><strong id="totalBudget">¥6,000</strong></div>
-      <div class="stat"><span>截至今天应花</span><strong id="expectedSpent">—</strong></div>
+      <div class="stat"><span>截至今日应花</span><strong id="expectedSpent">—</strong></div>
       <div class="stat"><span>本期预算剩余</span><strong id="remaining">—</strong></div>
     </section>
 
     <section class="card entry-card">
       <div class="section-tag">更新消费总额</div>
       <h2>本期累计消费</h2>
-      <p class="hint">填写从本期 15 日至统计日的累计消费，不是当天的金额。重复保存会<span class="underline">覆盖旧值</span>，不会叠加。</p>
+      <p class="hint">请填写本账期 15 日至统计日的累计消费总额（非单日消费）。重复保存将<span class="underline">覆盖旧值</span>，不会叠加。</p>
       <form id="totalForm">
         <div class="money-input"><span>¥</span><input id="totalInput" name="total" type="number" step="0.01" min="0" max="99999999" inputmode="decimal" placeholder="例如 860.00" autocomplete="off" required aria-label="本账期累计消费总额"></div>
         <button type="submit" class="primary" id="saveBtn">保存本期累计消费</button>
@@ -65,11 +65,11 @@
 
     <section class="next-budget">
       <div><span>本账期还剩</span><strong id="daysRemaining">—</strong></div>
-      <div><span>此后每天平均可花</span><strong id="dailyAllowance">—</strong></div>
+      <div><span>此后日均可用</span><strong id="dailyAllowance">—</strong></div>
     </section>
 
     <section class="card history-card">
-      <div class="section-row"><div><h2>历史账期</h2><p class="hint">切换顶部箭头，查看或修正任意历史账期</p></div><span id="historyCount" class="history-badge">0 期</span></div>
+      <div class="section-row"><div><h2>历史账期</h2><p class="hint">切换顶部箭头，可查看或修正任意历史账期。</p></div><span id="historyCount" class="history-badge">共0期</span></div>
       <div id="historyList" class="history-list"><div class="empty">暂无记录</div></div>
     </section>
 
@@ -79,38 +79,39 @@
         <div class="hero-kicker">我的净资产 · 人民币</div><div class="hero-number" id="netAssets">—</div><div class="hero-caption" id="assetAsOf">先记录一次账户余额</div>
       </section>
       <section class="summary" aria-label="资产统计"><div class="stat"><span>账户余额合计</span><strong id="grossAssets">—</strong></div><div class="stat"><span>其他负债</span><strong id="totalLiabilities">—</strong></div><div class="stat"><span>较上次快照</span><strong id="assetChange">—</strong></div></section><p class="hint asset-comparison" id="assetComparison"></p>
-      <section class="card"><h2>更新账户余额</h2><p class="hint">统一填人民币金额。欧意和富途填平台显示的账户净资产 / 总权益，包含现金和持仓。</p>
+      <section class="card"><h2>更新账户余额</h2><p class="hint">请统一填写人民币金额。欧意与富途请填写平台显示的「账户净资产 / 总权益」（含现金与持仓）。</p>
         <form id="assetForm">
           <label class="asset-field" for="bankAsset"><span><b>银行卡</b><small>所有银行卡可用存款合计</small></span><div><span>¥</span><input id="bankAsset" type="number" step="0.01" min="0" max="99999999" inputmode="decimal" placeholder="0.00" required></div></label>
-          <label class="asset-field" for="okxAsset"><span><b>欧意 OKX</b><small>账户净资产，折合人民币</small></span><div><span>¥</span><input id="okxAsset" type="number" step="0.01" min="-99999999" max="99999999" inputmode="decimal" placeholder="0.00" required></div></label>
-          <label class="asset-field" for="futuAsset"><span><b>富途牛牛</b><small>现金和证券净资产，折合人民币</small></span><div><span>¥</span><input id="futuAsset" type="number" step="0.01" min="-99999999" max="99999999" inputmode="decimal" placeholder="0.00" required></div></label>
+          <label class="asset-field" for="okxAsset"><span><b>欧意 OKX</b><small>账户净资产（折合人民币）</small></span><div><span>¥</span><input id="okxAsset" type="number" step="0.01" min="-99999999" max="99999999" inputmode="decimal" placeholder="0.00" required></div></label>
+          <label class="asset-field" for="futuAsset"><span><b>富途牛牛</b><small>现金与证券净资产（折合人民币）</small></span><div><span>¥</span><input id="futuAsset" type="number" step="0.01" min="-99999999" max="99999999" inputmode="decimal" placeholder="0.00" required></div></label>
           <label class="asset-field" for="debtAsset"><span><b>其他负债</b><small>信用卡欠款、未在平台内扣除的借款</small></span><div><span>¥</span><input id="debtAsset" type="number" step="0.01" min="0" max="99999999" inputmode="decimal" value="0" required></div></label>
           <label class="asset-date" for="assetDate">余额日期<input id="assetDate" type="date" required></label>
-          <p class="hint asset-help">按各平台人民币估值填入，不直接填写 USDT、港元或美元数量；平台净资产已扣的融资借款，不再重复填负债。账户间转账只改变分布，不算收入或消费。</p>
+          <p class="hint asset-help">请按各平台的人民币估值填写，勿直接填写 USDT、港元或美元数量；平台净资产中已扣除的融资借款无需重复计入负债。账户间转账仅改变资金分布，不计入收入或消费。</p>
           <button class="primary" id="assetSave" type="submit">保存资产快照</button><p class="save-message" id="assetMessage" role="status" aria-live="polite"></p>
         </form>
       </section>
       <section class="card savings-card"><div class="section-tag">本期 Saving</div><h2>已录入收支结余</h2><div class="saving-number" id="cashSavings">—</div><p class="hint" id="savingsCaption"></p>
         <label class="field-label" for="incomeInput">本期实际收入（元）</label><div class="setting-row"><input id="incomeInput" type="number" step="0.01" min="0" max="99999999" inputmode="decimal" placeholder="例如本期已到账工资"><button type="button" id="incomeSave" class="secondary">保存收入</button></div>
-        <p class="hint">收入减已录入消费，不含投资涨跌和未录入收支。净资产变化会包含市场涨跌，两者不同。</p>
+        <p class="hint">结余 = 实际收入 − 已录入消费，不含投资涨跌与未录入收支（与含市场涨跌的净资产变化不同）。</p>
       </section>
-      <section class="card"><div class="section-row"><h2>资产快照</h2><span class="history-badge" id="assetHistoryCount">0 次</span></div><p class="hint">同一天重复保存会更新当天数据，不会累加。</p><div id="assetHistory" class="history-list"></div></section>
+      <section class="card"><div class="section-row"><h2>资产快照</h2><span class="history-badge" id="assetHistoryCount">共0次</span></div><p class="hint">同一天重复保存将更新当天数据，不会累加。</p><div id="assetHistory" class="history-list"></div></section>
     </div>
     <details class="card settings" id="settingsPanel">
       <summary>预算与数据备份 <span class="chevron">⌄</span></summary>
       <div class="settings-inner">
         <label class="field-label" for="budgetInput">本期预算（元）</label>
         <div class="setting-row"><input id="budgetInput" type="number" step="1" min="1" max="99999999" inputmode="numeric"><button type="button" id="budgetSave" class="secondary">保存预算</button></div>
-        <p class="hint">不填写则默认每期 ¥6,000。未来新账期也默认 ¥6,000。</p>
+        <p class="hint">留空则默认每期 ¥6,000，未来新账期也将沿用此默认值。</p>
         <div class="section-divider"></div>
         <div class="backup-grid"><button type="button" class="secondary" id="exportBtn">导出备份</button><label class="secondary file-label" for="importFile">恢复备份<input id="importFile" type="file" accept=".json,application/json" hidden></label></div>
-        <p class="hint">消费和资产记录只存在当前设备。备份为 JSON 文件，建议每月导出并保存到“文件”或 iCloud 云盘。</p>
+        <p class="hint">消费与资产记录仅保存在当前设备。备份文件为 JSON 格式，建议每月导出并存至「文件」或 iCloud 云盘。</p>
       </div>
     </details>
 
-    <div class="notice" id="coverageNotice">提醒：未更新的消费不会自动同步微信、支付宝。信用卡刷卡应计入消费，还款不再重复计算。</div>
-    <footer class="footer">离线单机 · 无广告 · 无服务器账户 · 数据不会主动上传<br>公司报销、账户内部划转和投资本金调拨不计入日常消费。</footer>
+    <div class="notice" id="coverageNotice">提醒：消费记录不会自动同步微信或支付宝；信用卡刷卡应计入消费，后续还款不再重复计算。</div>
+    <footer class="footer">离线单机 · 无广告 · 无服务器账户 · 数据不会主动上传<br>公司报销、账户内部划转及投资本金调拨，均不计入日常消费。</footer>
   </main>
 </body>
 </html>
+
 
